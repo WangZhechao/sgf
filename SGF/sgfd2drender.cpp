@@ -74,31 +74,60 @@ namespace SGF
 	}
 
 
-	//开始
-	void D2DRender::RenderFrame(float dt)
+	bool D2DRender::BeginRender()
 	{
-		//累计时间
-		m_lfTotalTime += dt;
-
-		//计算帧
-		if (m_lfTotalTime >= 1000.0f)
-		{
-			m_lfTotalTime -= 1000.0f;
-			m_nFPS = m_nFPSCount;
-			m_nFPSCount = 1;
-		}
-		else
-		{
-			++m_nFPSCount;
-		}
-
-
 		//创建设备资源
 		HRESULT hr = CreateDeviceResources();
 
 		if (SUCCEEDED(hr) && m_pRenderTarget)
 		{
 			m_pRenderTarget->BeginDraw();
+
+			return true;
+		}
+
+		return false;
+	}
+
+
+	void D2DRender::EndRender()
+	{
+		if (m_pRenderTarget)
+		{
+			HRESULT hr = m_pRenderTarget->EndDraw();
+
+			/*
+			* 如果设备丢失
+			* 程序在全屏状态下失去键盘焦点（全屏时按下Alt+Tab或Win+D键或Win+L键）
+			* 其他程序进入全屏状态
+			* 电源管理事件，比如屏保等
+			*/
+			if (hr == D2DERR_RECREATE_TARGET)
+			{
+				DiscardDeviceResources();
+			}
+		}
+	}
+
+
+	void D2DRender::RenderFPS(float dt)
+	{
+		if (m_pRenderTarget)
+		{
+			//累计时间
+			m_lfTotalTime += dt;
+
+			//计算帧
+			if (m_lfTotalTime >= 1000.0f)
+			{
+				m_lfTotalTime -= 1000.0f;
+				m_nFPS = m_nFPSCount;
+				m_nFPSCount = 1;
+			}
+			else
+			{
+				++m_nFPSCount;
+			}
 
 			//绘制
 			m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
@@ -117,21 +146,6 @@ namespace SGF
 					m_pBlackBrush
 				);
 			}
-
-
-			hr = m_pRenderTarget->EndDraw();
-		}
-
-
-		/* 
-		 * 如果设备丢失
-		 * 程序在全屏状态下失去键盘焦点（全屏时按下Alt+Tab或Win+D键或Win+L键）
-		 * 其他程序进入全屏状态
-		 * 电源管理事件，比如屏保等
-		 */
-		if (hr == D2DERR_RECREATE_TARGET)
-		{
-			DiscardDeviceResources();
 		}
 	}
 

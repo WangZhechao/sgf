@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+struct GameInterface;
+
 namespace SGF
 {
 	class Render;
@@ -14,7 +16,7 @@ namespace SGF
 
 	public:       
 		int Initialize(Render* render);
-		void Run();
+		void Run(GameInterface* game = NULL);
 
 
 	private:

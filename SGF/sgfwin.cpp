@@ -2,13 +2,16 @@
 #include "sgfwin.h"
 #include "sgferr.h"
 #include "sgfrender.h"
+#include "game.h"
 
 #define APP_CLASS_NAME TEXT("SGFWinAppClass")
 #define APP_WIN_NAME TEXT("SGFWinApp")
 
+
 namespace SGF
 {
 	const float DEFAULT_SYSTEM_DPI = 96.0f;
+	const int DEFAULT_FPS = 30;
 
 	WinApp::WinApp(HINSTANCE hinstance) :
 		m_pRender(NULL),
@@ -219,12 +222,31 @@ namespace SGF
 
 
 	//运行
-	void WinApp::Run()
+	void WinApp::Run(GameInterface* game)
 	{
 		MSG nMsg = { 0 };
 		bool bQuit = false;
 		float elapsed = 0.0f;
 		LARGE_INTEGER nFrequency, nPrevTime, nCurrTime, nElapsedCounter;
+		float lag = 0.0f;
+		float frameMS = 1000.0f / DEFAULT_FPS;
+
+
+		//游戏初始化
+		if (game && game->init)
+			game->init();
+
+
+		//获取每帧更新时间
+		if (game && game->getfps)
+		{
+			int fps = game->getfps();
+			if (fps <= 0)
+				fps = DEFAULT_FPS;
+
+			frameMS = 1000.0f / fps;
+		}
+
 
 		QueryPerformanceFrequency(&nFrequency);
 		QueryPerformanceCounter(&nPrevTime);
@@ -252,18 +274,47 @@ namespace SGF
 				nPrevTime.QuadPart = nCurrTime.QuadPart;
 
 				elapsed = nElapsedCounter.QuadPart * 1000.0f / nFrequency.QuadPart;
+				lag += elapsed;
 
 				//程序激活并且没有主动挂起
 				if (m_bActive && (!m_bSuspend))
 				{
-					if (m_pRender)
-						m_pRender->RenderFrame(elapsed);
+					//游戏输入
+					if (game &&game->input)
+						game->input(elapsed);
+
+
+					//游戏更新
+					while (lag >= frameMS)
+					{
+						//更新逻辑
+						if (game && game->update)
+							game->update(frameMS);
+
+
+						lag -= frameMS;
+					}
+
+
+					//游戏渲染
+					if (game && game->render)
+					{
+						game->render(m_pRender, lag);
+					}
+					else if(m_pRender && m_pRender->BeginRender())
+					{
+						m_pRender->RenderFPS(elapsed);
+						m_pRender->EndRender();
+					}
 				}
 
 				//小游戏，降低点cpu
 				Sleep(1);
 			}
 		}
+
+		if (game && game->uninit)
+			game->uninit();
 
 		if (m_pRender)
 			m_pRender->Uninitiate();

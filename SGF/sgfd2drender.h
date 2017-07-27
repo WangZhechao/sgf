@@ -19,7 +19,9 @@ namespace SGF
 
 	public:
 		virtual int Initiate(HWND hwnd);		//初始化
-		virtual void RenderFrame(float dt);			//开始渲染
+		virtual bool BeginRender();
+		virtual void RenderFPS(float dt);			//开始渲染
+		virtual void EndRender();
 		virtual void Uninitiate();		//反初始化
 		virtual void Resize(unsigned int w, unsigned int h);			//调整大小
 		virtual void FocusChange(bool act);								//改变焦点

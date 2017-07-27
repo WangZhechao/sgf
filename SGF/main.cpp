@@ -5,6 +5,15 @@
 #include "sgfwin.h"
 #include "sgferr.h"
 #include "sgfd2drender.h"
+#include "sgfdl.h"
+#include "game.h"
+
+
+GameInterface* GetGame()
+{
+	return NULL;
+}
+
 
 int WINAPI WinMain(
 	HINSTANCE hInstance/* hInstance */,
@@ -20,6 +29,13 @@ int WINAPI WinMain(
 	// unlikely event that HeapSetInformation fails.
 	HeapSetInformation(NULL, HeapEnableTerminationOnCorruption, NULL, 0);
 
+	//GameInterface* pGameInterface = GetGame();
+	//if (NULL == pGameInterface) 
+	//{
+	//	MessageBox(NULL, TEXT("º”‘ÿ”Œœ∑DLL ß∞‹£°"), TEXT("¥ÌŒÛ"), MB_OK);
+	//	return -1;
+	//}
+
 	SGF::D2DRender* render = new SGF::D2DRender();
 	SGF::WinApp app(hInstance);
 
@@ -27,7 +43,6 @@ int WINAPI WinMain(
 	{
 		app.Run();
 	}
-
 
 	if (render)
 	{

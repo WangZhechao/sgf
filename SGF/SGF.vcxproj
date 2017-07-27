@@ -143,9 +143,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sgfd2drender.cpp" />
+    <ClCompile Include="sgfdl.cpp" />
     <ClCompile Include="sgfwin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sgfdl.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="sgfd2drender.h" />
     <ClInclude Include="sgferr.h" />
     <ClInclude Include="sgfrender.h" />
