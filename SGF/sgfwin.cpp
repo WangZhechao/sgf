@@ -11,7 +11,6 @@
 namespace SGF
 {
 	const float DEFAULT_SYSTEM_DPI = 96.0f;
-	const int DEFAULT_FPS = 30;
 
 	WinApp::WinApp(HINSTANCE hinstance) :
 		m_pRender(NULL),
@@ -234,7 +233,7 @@ namespace SGF
 
 		//游戏初始化
 		if (game && game->init)
-			game->init();
+			game->init(m_pRender);
 
 
 		//获取每帧更新时间
@@ -297,12 +296,13 @@ namespace SGF
 
 
 					//游戏渲染
-					if (game && game->render)
+					if (m_pRender && m_pRender->BeginRender())
 					{
-						game->render(m_pRender, lag);
-					}
-					else if(m_pRender && m_pRender->BeginRender())
-					{
+						if (game && game->render)
+						{
+							game->render(m_pRender, lag);
+						}
+
 						m_pRender->RenderFPS(elapsed);
 						m_pRender->EndRender();
 					}
@@ -314,7 +314,7 @@ namespace SGF
 		}
 
 		if (game && game->uninit)
-			game->uninit();
+			game->uninit(m_pRender);
 
 		if (m_pRender)
 			m_pRender->Uninitiate();

@@ -16,7 +16,6 @@ namespace SGF
 		D2DRender();
 		virtual ~D2DRender();
 
-
 	public:
 		virtual int Initiate(HWND hwnd);		//初始化
 		virtual bool BeginRender();
@@ -26,6 +25,15 @@ namespace SGF
 		virtual void Resize(unsigned int w, unsigned int h);			//调整大小
 		virtual void FocusChange(bool act);								//改变焦点
 		virtual void GetDesktopDpi(float* dpiX, float* dpiY);
+		virtual void GetSize(SIZE& size);
+
+	public:
+		//未完善接口
+		virtual TextFormat* CreateTextFormat();
+		virtual void DestoryTextFormat(TextFormat* format);
+
+		virtual void SetTextColor(TextFormat* format, DWORD rgb);
+		virtual void DrawText(int x, int y, const TCHAR* text, const TextFormat* format);
 
 
 	private:

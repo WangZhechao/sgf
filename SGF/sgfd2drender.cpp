@@ -17,6 +17,13 @@ namespace SGF
 	}
 
 
+	struct D2DTextFormat
+	{
+		ID2D1SolidColorBrush* textBrush;
+		IDWriteTextFormat *textFormat;
+	};
+
+
 	D2DRender::D2DRender():
 		m_bFPS(true),
 		m_nFPS(0),
@@ -83,6 +90,11 @@ namespace SGF
 		{
 			m_pRenderTarget->BeginDraw();
 
+			//绘制
+			m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+			m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+
+
 			return true;
 		}
 
@@ -129,9 +141,6 @@ namespace SGF
 				++m_nFPSCount;
 			}
 
-			//绘制
-			m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-			m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
 
 
 			if (m_bFPS)
@@ -178,6 +187,20 @@ namespace SGF
 			m_pDirect2dFactory->GetDesktopDpi(dpiX, dpiY);
 		}
 	}
+
+	void D2DRender::GetSize(SIZE& size)
+	{
+		if (m_pRenderTarget)
+		{
+			D2D1_SIZE_F sizef = m_pRenderTarget->GetSize();
+			size = {(long)sizef.width, (long)sizef.height};
+		}
+		else
+		{
+			size = { 0, 0 };
+		}
+	}
+
 
 	HRESULT D2DRender::CreateDeviceIndependentResources()
 	{
@@ -259,7 +282,7 @@ namespace SGF
 			{
 				hr = m_pDirect2dFactory->CreateHwndRenderTarget(
 					D2D1::RenderTargetProperties(),
-					D2D1::HwndRenderTargetProperties(m_hWnd, size, D2D1_PRESENT_OPTIONS_IMMEDIATELY),
+					D2D1::HwndRenderTargetProperties(m_hWnd, size),
 					&m_pRenderTarget);
 			}
 
@@ -283,5 +306,115 @@ namespace SGF
 	{
 		D2DSafeRelease(&m_pBlackBrush);
 		D2DSafeRelease(&m_pRenderTarget);
+	}
+
+
+
+
+
+
+
+
+
+	//未完善接口
+	TextFormat* D2DRender::CreateTextFormat()
+	{
+		HRESULT hr = S_OK;
+
+		/* 创建工厂 */
+		if (!m_pDWriteFactory)
+		{
+			hr = DWriteCreateFactory(
+				DWRITE_FACTORY_TYPE_SHARED,
+				__uuidof(m_pDWriteFactory),
+				reinterpret_cast<IUnknown **>(&m_pDWriteFactory)
+			);
+		}
+
+		if (FAILED(hr))
+			return NULL;
+
+
+		/* 创建字体格式 */
+		static const WCHAR msc_fontName[] = L"Consolas";
+		static const FLOAT msc_fontSize = 15;
+
+		IDWriteTextFormat* writeformat = NULL;
+		hr = m_pDWriteFactory->CreateTextFormat(
+			msc_fontName,
+			NULL,
+			DWRITE_FONT_WEIGHT_BOLD,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			msc_fontSize,
+			L"", //locale
+			&writeformat
+		);
+
+
+		if (FAILED(hr))
+		{
+			return NULL;
+		}
+
+
+		//创建默认画刷
+		ID2D1SolidColorBrush* writeBrush = NULL;
+		hr = m_pRenderTarget->CreateSolidColorBrush(
+			D2D1::ColorF(D2D1::ColorF::White),
+			&writeBrush);
+		if (FAILED(hr))
+		{
+			D2DSafeRelease(&writeformat);
+			return NULL;
+		}
+
+
+		/* 返回成功 */
+		D2DTextFormat *format = new D2DTextFormat();
+		format->textFormat = writeformat;
+		format->textBrush = writeBrush;
+
+		return (TextFormat*)format;
+	}
+
+
+	void D2DRender::DestoryTextFormat(TextFormat* format)
+	{
+		if (format == NULL)
+			return;
+
+		D2DTextFormat *d2dformat = (D2DTextFormat *)format;
+		D2DSafeRelease(&(d2dformat->textBrush));
+		D2DSafeRelease(&(d2dformat->textFormat));
+	}
+
+
+	void D2DRender::SetTextColor(TextFormat* format, DWORD rgb)
+	{
+		if (!format)
+			return;
+
+		D2DTextFormat *d2dformat = (D2DTextFormat *)format;
+		if (d2dformat->textBrush)
+			d2dformat->textBrush->SetColor(D2D1::ColorF(rgb));
+	}
+
+
+	void D2DRender::DrawText(int x, int y, const TCHAR* text, const TextFormat* format)
+	{
+		if (format == NULL || text == NULL || _tcsclen(text) <= 0)
+			return;
+
+		D2DTextFormat *d2dformat = (D2DTextFormat *)format;
+		D2D1_SIZE_F &size = m_pRenderTarget->GetSize();
+
+		m_pRenderTarget->DrawText(
+			text,
+			_tcsclen(text),
+			d2dformat->textFormat,
+			D2D1::RectF(x, y, size.width, size.height),
+			d2dformat->textBrush
+		);
 	}
 }

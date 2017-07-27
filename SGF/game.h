@@ -1,15 +1,21 @@
 #pragma once
 
 #include <Windows.h>
-class SGF::Render;
+
+const int DEFAULT_FPS = 30;
+
+namespace SGF
+{
+	class Render;
+}
 
 
 typedef int(*getfps)();
-typedef void(*init)();
+typedef void(*init)(SGF::Render* render);
 typedef void(*input)(float dt);
 typedef bool(*update)(float dt);
 typedef void(*render)(SGF::Render* render, float dt);
-typedef void(*uninit)();
+typedef void(*uninit)(SGF::Render* render);
 
 
 //游戏接口
@@ -24,5 +30,4 @@ struct GameInterface
 };
 
 
-//获取游戏接口
-GameInterface* getGameInterface();
+typedef GameInterface*(*GetInterfaceFun)();
