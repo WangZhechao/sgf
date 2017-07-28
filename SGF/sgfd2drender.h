@@ -29,7 +29,8 @@ namespace SGF
 
 	public:
 		//Î´ÍêÉÆ½Ó¿Ú
-		virtual TextFormat* CreateTextFormat();
+		virtual TextFormat* CreateTextFormat(const TCHAR* fontfamily, int fontsize,
+			SGF_FONT_STYLE fontstyle, SGF_FONT_WEIGHT fontweight);
 		virtual void DestoryTextFormat(TextFormat* format);
 
 		virtual void SetTextColor(TextFormat* format, DWORD rgb);

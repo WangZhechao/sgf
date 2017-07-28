@@ -1,9 +1,25 @@
 #pragma once
 
+typedef void TextFormat;
+
+enum SGF_FONT_STYLE
+{
+	SGF_FS_NORMAL,
+	SGF_FS_OBLIQUE,
+	SGF_FS_ITALIC
+};
+
+enum SGF_FONT_WEIGHT
+{
+	SGF_FW_THIN = 100,
+	SGF_FW_NORMAL = 400,
+	SGF_FW_MEDIUM = 500,
+	SGF_FW_BOLD = 700,
+	SGF_FW_HEAVY = 900
+};
+
 namespace SGF
 {
-	typedef void TextFormat;
-
 	class Render
 	{
 	public:
@@ -24,7 +40,8 @@ namespace SGF
 
 	public:
 		//Î´ÍêÉÆ½Ó¿Ú
-		virtual TextFormat* CreateTextFormat() = 0;
+		virtual TextFormat* CreateTextFormat(const TCHAR* fontfamily, int fontsize, 
+			SGF_FONT_STYLE fontstyle, SGF_FONT_WEIGHT fontweight) = 0;
 		virtual void DestoryTextFormat(TextFormat*) = 0;
 		virtual void SetTextColor(TextFormat* format, DWORD rgb) = 0;
 		virtual void DrawText(int x, int y, const TCHAR* text, const TextFormat* format) = 0;

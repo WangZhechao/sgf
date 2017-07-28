@@ -13,6 +13,13 @@ const int DEFAULT_FONT_WIDTH = 15;
 NumRain* g_numrain = NULL;
 float g_fps_time = 0.0f;
 
+static const TCHAR* getName()
+{
+	static TCHAR* name = L"Êý×ÖÓê";
+
+	return name;
+}
+
 static int getFPS()
 {
 	return DEFAULT_FPS;
@@ -91,6 +98,7 @@ extern "C" {
 NR_EXTERN GameInterface* getGameInterface()
 {
 	static GameInterface inf = {
+		getName,
 		getFPS,
 		initGame,
 		processInput,

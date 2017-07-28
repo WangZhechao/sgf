@@ -236,6 +236,13 @@ namespace SGF
 			game->init(m_pRender);
 
 
+		//更新游戏名称
+		if (game && game->getname && game->getname() != NULL)
+		{
+			::SetWindowText(m_hWnd, game->getname());
+		}
+
+
 		//获取每帧更新时间
 		if (game && game->getfps)
 		{

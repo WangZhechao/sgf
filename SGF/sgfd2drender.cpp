@@ -223,31 +223,32 @@ namespace SGF
 					__uuidof(m_pDWriteFactory),
 					reinterpret_cast<IUnknown **>(&m_pDWriteFactory)
 				);
-
-
-				if (SUCCEEDED(hr) && (!m_pTextFormat))
-				{
-					// Create a DirectWrite text format object.
-					hr = m_pDWriteFactory->CreateTextFormat(
-						msc_fontName,
-						NULL,
-						DWRITE_FONT_WEIGHT_NORMAL,
-						DWRITE_FONT_STYLE_NORMAL,
-						DWRITE_FONT_STRETCH_NORMAL,
-						msc_fontSize,
-						L"", //locale
-						&m_pTextFormat
-					);
-				}
-
-
-				if (SUCCEEDED(hr) && m_pTextFormat)
-				{
-					// Center the text horizontally and vertically.
-					m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-					m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
-				}
 			}
+
+
+			if (SUCCEEDED(hr) && (!m_pTextFormat))
+			{
+				// Create a DirectWrite text format object.
+				hr = m_pDWriteFactory->CreateTextFormat(
+					msc_fontName,
+					NULL,
+					DWRITE_FONT_WEIGHT_NORMAL,
+					DWRITE_FONT_STYLE_NORMAL,
+					DWRITE_FONT_STRETCH_NORMAL,
+					msc_fontSize,
+					L"", //locale
+					&m_pTextFormat
+				);
+			}
+
+
+			if (SUCCEEDED(hr) && m_pTextFormat)
+			{
+				// Center the text horizontally and vertically.
+				m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+				m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+			}
+			
 		}
 
 		return hr;
@@ -317,7 +318,8 @@ namespace SGF
 
 
 	//未完善接口
-	TextFormat* D2DRender::CreateTextFormat()
+	TextFormat* D2DRender::CreateTextFormat(const TCHAR* fontfamily, int fontsize,
+		SGF_FONT_STYLE fontstyle, SGF_FONT_WEIGHT fontweight)
 	{
 		HRESULT hr = S_OK;
 
@@ -334,19 +336,14 @@ namespace SGF
 		if (FAILED(hr))
 			return NULL;
 
-
-		/* 创建字体格式 */
-		static const WCHAR msc_fontName[] = L"Consolas";
-		static const FLOAT msc_fontSize = 15;
-
 		IDWriteTextFormat* writeformat = NULL;
 		hr = m_pDWriteFactory->CreateTextFormat(
-			msc_fontName,
+			fontfamily,
 			NULL,
-			DWRITE_FONT_WEIGHT_BOLD,
-			DWRITE_FONT_STYLE_NORMAL,
+			(DWRITE_FONT_WEIGHT)fontweight,
+			(DWRITE_FONT_STYLE)fontstyle,
 			DWRITE_FONT_STRETCH_NORMAL,
-			msc_fontSize,
+			fontsize,
 			L"", //locale
 			&writeformat
 		);

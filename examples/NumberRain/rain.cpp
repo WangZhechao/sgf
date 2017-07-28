@@ -35,7 +35,7 @@ bool NumRain::createFont(SGF::Render* render)
 {
 	if (render)
 	{
-		_textformat = render->CreateTextFormat();
+		_textformat = render->CreateTextFormat(L"Consolas", 15, SGF_FS_NORMAL, SGF_FW_HEAVY);
 	}
 
 	if (_textformat)
