@@ -138,9 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="rain.h" />
     <ClInclude Include="strline.h" />
     <ClInclude Include="stdafx.h" />

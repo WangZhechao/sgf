@@ -40,7 +40,7 @@ public:
 接着定义一个类，负责组织管理显示这些字符串。
 
 ```C++
-class NumRain
+class DigitalRain
 {
 private:
 	SIZE _font;
@@ -50,8 +50,8 @@ private:
 	std::vector<StrLine> _num_lines;
 
 public:
-	NumRain(const SIZE& win, const SIZE& font);
-	~NumRain();
+	DigitalRain(const SIZE& win, const SIZE& font);
+	~DigitalRain();
 
 public:
 	void genLines();
@@ -82,7 +82,7 @@ CHAR StrLine::genChar()
 对于字符串的更新，需要枚举所有字符串，根据字符串的速度更新下一次的位置，并且实时插入新的字符，删除旧的字符，只有这样才会有不断变换的效果。最后，还需要查看字符串是否超出屏幕范围，如果超出范围将其删除，并添加新的字符串。
 
 ```C++
-void NumRain::update()
+void DigitalRain::update()
 {
 	std::vector<StrLine>::iterator itr;
 
