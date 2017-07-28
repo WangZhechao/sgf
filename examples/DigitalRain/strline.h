@@ -5,7 +5,7 @@
 
 class StrLine
 {
-	friend class NumRain;
+	friend class DigitalRain;
 
 private:
 	int _length;					//³¤¶È

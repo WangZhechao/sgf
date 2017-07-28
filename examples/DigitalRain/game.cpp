@@ -10,7 +10,7 @@ const int DEFAULT_FONT_HEIGHT = 12;
 const int DEFAULT_FONT_WIDTH = 15;
 
 
-NumRain* g_numrain = NULL;
+DigitalRain* g_numrain = NULL;
 float g_fps_time = 0.0f;
 
 static const TCHAR* getName()
@@ -35,7 +35,7 @@ static void initGame(SGF::Render* render)
 	SIZE font = { DEFAULT_FONT_WIDTH, DEFAULT_FONT_HEIGHT };
 	SIZE win; render->GetSize(win);
 
-	g_numrain = new NumRain(win, font);
+	g_numrain = new DigitalRain(win, font);
 	if (g_numrain)
 	{
 		g_numrain->createFont(render);

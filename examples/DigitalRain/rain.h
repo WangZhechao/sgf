@@ -12,7 +12,7 @@ namespace SGF
 
 
 
-class NumRain
+class DigitalRain
 {
 private:
 	SIZE _font;
@@ -22,8 +22,8 @@ private:
 	std::vector<StrLine> _num_lines;
 
 public:
-	NumRain(const SIZE& win, const SIZE& font);
-	~NumRain();
+	DigitalRain(const SIZE& win, const SIZE& font);
+	~DigitalRain();
 
 public:
 	void genLines();

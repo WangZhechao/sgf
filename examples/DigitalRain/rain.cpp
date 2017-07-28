@@ -4,7 +4,7 @@
 #include "sgfrender.h"
 
 
-NumRain::NumRain(const SIZE& win, const SIZE& font)
+DigitalRain::DigitalRain(const SIZE& win, const SIZE& font)
 	: _textformat(NULL)
 {
 	_win = win;
@@ -13,13 +13,13 @@ NumRain::NumRain(const SIZE& win, const SIZE& font)
 	srand((int)GetTickCount()); //初始化随机数发生器
 }
 
-NumRain::~NumRain()
+DigitalRain::~DigitalRain()
 {
 	
 }
 
 
-void NumRain::genLines()
+void DigitalRain::genLines()
 {
 	int count = _win.cx / _font.cx;
 
@@ -31,7 +31,7 @@ void NumRain::genLines()
 }
 
 
-bool NumRain::createFont(SGF::Render* render)
+bool DigitalRain::createFont(SGF::Render* render)
 {
 	if (render)
 	{
@@ -45,7 +45,7 @@ bool NumRain::createFont(SGF::Render* render)
 }
 
 
-void NumRain::destoryFont(SGF::Render* render)
+void DigitalRain::destoryFont(SGF::Render* render)
 {
 	if (render)
 	{
@@ -54,7 +54,7 @@ void NumRain::destoryFont(SGF::Render* render)
 }
 
 
-void NumRain::update()
+void DigitalRain::update()
 {
 	std::vector<StrLine>::iterator itr;
 
@@ -84,7 +84,7 @@ void NumRain::update()
 }
 
 
-void NumRain::draw(SGF::Render* render)
+void DigitalRain::draw(SGF::Render* render)
 {
 	if (render == NULL)
 		return;
