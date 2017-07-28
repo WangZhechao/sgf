@@ -18,7 +18,7 @@ public:
 	StrLine(int x);
 
 public:
-	CHAR genChar();
-	void genLine();
+	CHAR genChar();				//生成字符
+	void genLine();				//生成字符串
 	void setPosX(int x);		//设置水平位置
 };

@@ -60,11 +60,13 @@ void NumRain::update()
 
 	for (itr = _num_lines.begin(); itr != _num_lines.end(); ++itr)
 	{
+		//降低等待时间
 		if (itr->_wait_time > 0)
 		{
 			itr->_wait_time--;
 		}
-		else if (itr->_wait_time <= 0)
+		//删除旧的添加新的
+		else
 		{
 			itr->_num_list.push_front(itr->genChar());
 			itr->_num_list.pop_back();
