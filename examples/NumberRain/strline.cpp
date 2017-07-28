@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "strline.h"
 
+#define MAX_LINE_LENGTH	20
+#define MIN_LINE_LENGTH 10
+
+#define MAX_SPEED_Y 15
+#define MIN_SPEED_Y 5
+
+#define MAX_WAIT_TIME 20
+
 StrLine::StrLine(int x)
 	: _begin_pos({x, 0})
 {
@@ -16,9 +24,9 @@ CHAR StrLine::genChar()
 
 void StrLine::genLine()
 {
-	_length = rand() % 5 + 10;
-	_vy = rand() % 10 + 5;
-	_wait_time = rand() % 20;
+	_length = rand() % (MAX_LINE_LENGTH - MIN_LINE_LENGTH) + MAX_LINE_LENGTH;
+	_vy = rand() % (MAX_SPEED_Y- MIN_SPEED_Y) + MIN_SPEED_Y;
+	_wait_time = rand() % MAX_WAIT_TIME;
 	_begin_pos.y = 0;
 
 	_num_list.clear();
