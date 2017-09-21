@@ -1,6 +1,7 @@
 #pragma once
 
 typedef void TextFormat;
+typedef void Bitmap;
 
 enum SGF_FONT_STYLE
 {
@@ -37,6 +38,28 @@ namespace SGF
 
 		virtual void GetDesktopDpi(float* dpiX, float* dpiY) = 0;
 		virtual void GetSize(SIZE& size) = 0;
+
+
+		//加载资源位图
+		virtual int LoadBitmapFromResource(
+			HINSTANCE hinstance,
+			PCWSTR resourceName,
+			PCWSTR resourceType,
+			UINT destinationWidth,
+			UINT destinationHeight,
+			Bitmap **ppBitmap) = 0;
+
+
+		//加载文件位图
+		virtual int LoadBitmapFromFile(
+			PCWSTR filename,
+			UINT destinationWidth,
+			UINT destinationHeight,
+			Bitmap **ppBitmap) = 0;
+
+
+		//绘制图像
+		virtual void DrawBitmap(Bitmap* bitmap, int x, int y) = 0;
 
 	public:
 		//未完善接口

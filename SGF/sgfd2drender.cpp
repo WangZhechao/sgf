@@ -34,7 +34,8 @@ namespace SGF
 		m_pRenderTarget(NULL),
 		m_pBlackBrush(NULL),
 		m_pDWriteFactory(NULL),
-		m_pTextFormat(NULL)
+		m_pTextFormat(NULL),
+		m_pWICFactory(NULL)
 
 	{
 		Create();
@@ -42,19 +43,30 @@ namespace SGF
 
 	D2DRender::~D2DRender()
 	{
-
+		Destory();
 	}
 
 	//创建
 	int D2DRender::Create()
 	{
-		HRESULT hr = CreateDeviceIndependentResources();
+		HRESULT hr = CoInitialize(NULL);
+		if (FAILED(hr))
+		{
+			return ERR_COM_INIT_FAIL;
+		}
+
+		hr = CreateDeviceIndependentResources();
 		if (FAILED(hr))
 		{
 			return ERR_CREATE_D2D_DEVICE_FAIL;
 		}
 
 		return hr;
+	}
+
+	void D2DRender::Destory()
+	{
+		CoUninitialize();
 	}
 
 
@@ -143,7 +155,7 @@ namespace SGF
 
 
 
-			if (m_bFPS)
+			if (m_bFPS && m_pTextFormat)
 			{
 				TCHAR tfps[32] = { 0 };
 				_stprintf(tfps, TEXT("FPS: %d"), m_nFPS);
@@ -201,13 +213,327 @@ namespace SGF
 		}
 	}
 
+	int D2DRender::LoadBitmapFromResource(HINSTANCE hinstance, PCWSTR resourceName, PCWSTR resourceType, UINT destinationWidth, UINT destinationHeight, Bitmap ** ppBitmap)
+	{
+		HRESULT hr = S_OK;
+		IWICBitmapDecoder *pDecoder = NULL;
+		IWICBitmapFrameDecode *pSource = NULL;
+		IWICStream *pStream = NULL;
+		IWICFormatConverter *pConverter = NULL;
+		IWICBitmapScaler *pScaler = NULL;
 
+		HRSRC imageResHandle = NULL;
+		HGLOBAL imageResDataHandle = NULL;
+		void *pImageFile = NULL;
+		DWORD imageFileSize = 0;
+
+
+		if (!m_pWICFactory) {
+			return -1;
+		}
+
+		// Locate the resource.
+		imageResHandle = FindResourceW(hinstance, resourceName, resourceType);
+
+		hr = imageResHandle ? S_OK : E_FAIL;
+		if (SUCCEEDED(hr))
+		{
+			// Load the resource.
+			imageResDataHandle = LoadResource(hinstance, imageResHandle);
+
+			hr = imageResDataHandle ? S_OK : E_FAIL;
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// Lock it to get a system memory pointer.
+			pImageFile = LockResource(imageResDataHandle);
+
+			hr = pImageFile ? S_OK : E_FAIL;
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// Calculate the size.
+			imageFileSize = SizeofResource(hinstance, imageResHandle);
+
+			hr = imageFileSize ? S_OK : E_FAIL;
+		}
+
+
+		if (SUCCEEDED(hr) && m_pWICFactory)
+		{
+			// Create a WIC stream to map onto the memory.
+			hr = m_pWICFactory->CreateStream(&pStream);
+		}
+
+
+		if (SUCCEEDED(hr) && pStream)
+		{
+			// Initialize the stream with the memory pointer and size.
+			hr = pStream->InitializeFromMemory(
+				reinterpret_cast<BYTE*>(pImageFile),
+				imageFileSize
+			);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// Create a decoder for the stream.
+			hr = m_pWICFactory->CreateDecoderFromStream(
+				pStream,
+				NULL,
+				WICDecodeMetadataCacheOnLoad,
+				&pDecoder
+			);
+		}
+
+
+		if (SUCCEEDED(hr) && pDecoder)
+		{
+			// Create the initial frame.
+			hr = pDecoder->GetFrame(0, &pSource);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// Convert the image format to 32bppPBGRA
+			// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+			hr = m_pWICFactory->CreateFormatConverter(&pConverter);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// If a new width or height was specified, create an
+			// IWICBitmapScaler and use it to resize the image.
+			if (destinationWidth != 0 || destinationHeight != 0)
+			{
+				UINT originalWidth, originalHeight;
+				hr = pSource->GetSize(&originalWidth, &originalHeight);
+				if (SUCCEEDED(hr))
+				{
+					if (destinationWidth == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationHeight) / static_cast<FLOAT>(originalHeight);
+						destinationWidth = static_cast<UINT>(scalar * static_cast<FLOAT>(originalWidth));
+					}
+					else if (destinationHeight == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationWidth) / static_cast<FLOAT>(originalWidth);
+						destinationHeight = static_cast<UINT>(scalar * static_cast<FLOAT>(originalHeight));
+					}
+
+					hr = m_pWICFactory->CreateBitmapScaler(&pScaler);
+					if (SUCCEEDED(hr))
+					{
+						hr = pScaler->Initialize(
+							pSource,
+							destinationWidth,
+							destinationHeight,
+							WICBitmapInterpolationModeCubic
+						);
+						if (SUCCEEDED(hr))
+						{
+							hr = pConverter->Initialize(
+								pScaler,
+								GUID_WICPixelFormat32bppPBGRA,
+								WICBitmapDitherTypeNone,
+								NULL,
+								0.f,
+								WICBitmapPaletteTypeMedianCut
+							);
+						}
+					}
+				}
+			}
+			else
+			{
+				hr = pConverter->Initialize(
+					pSource,
+					GUID_WICPixelFormat32bppPBGRA,
+					WICBitmapDitherTypeNone,
+					NULL,
+					0.f,
+					WICBitmapPaletteTypeMedianCut
+				);
+			}
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			//create a Direct2D bitmap from the WIC bitmap.
+			hr = m_pRenderTarget->CreateBitmapFromWicBitmap(
+				pConverter,
+				NULL,
+				(ID2D1Bitmap**)ppBitmap
+			);
+		}
+
+
+		D2DSafeRelease(&pDecoder);
+		D2DSafeRelease(&pSource);
+		D2DSafeRelease(&pStream);
+		D2DSafeRelease(&pConverter);
+		D2DSafeRelease(&pScaler);
+
+
+		if (hr == S_OK)
+			return 0;
+		else
+			return -2;
+	}
+
+	int D2DRender::LoadBitmapFromFile(PCWSTR filename, UINT destinationWidth, UINT destinationHeight, Bitmap ** ppBitmap)
+	{
+		HRESULT hr = S_OK;
+
+		IWICBitmapDecoder *pDecoder = NULL;
+		IWICBitmapFrameDecode *pSource = NULL;
+		IWICStream *pStream = NULL;
+		IWICFormatConverter *pConverter = NULL;
+		IWICBitmapScaler *pScaler = NULL;
+
+		if (!m_pWICFactory) {
+			return -1;
+		}
+
+
+		hr = m_pWICFactory->CreateDecoderFromFilename(
+			filename,
+			NULL,
+			GENERIC_READ,
+			WICDecodeMetadataCacheOnLoad,
+			&pDecoder
+		);
+
+		if (SUCCEEDED(hr))
+		{
+			// Create the initial frame.
+			hr = pDecoder->GetFrame(0, &pSource);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			// Convert the image format to 32bppPBGRA
+			// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+			hr = m_pWICFactory->CreateFormatConverter(&pConverter);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// If a new width or height was specified, create an
+			// IWICBitmapScaler and use it to resize the image.
+			if (destinationWidth != 0 || destinationHeight != 0)
+			{
+				UINT originalWidth, originalHeight;
+				hr = pSource->GetSize(&originalWidth, &originalHeight);
+				if (SUCCEEDED(hr))
+				{
+					if (destinationWidth == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationHeight) / static_cast<FLOAT>(originalHeight);
+						destinationWidth = static_cast<UINT>(scalar * static_cast<FLOAT>(originalWidth));
+					}
+					else if (destinationHeight == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationWidth) / static_cast<FLOAT>(originalWidth);
+						destinationHeight = static_cast<UINT>(scalar * static_cast<FLOAT>(originalHeight));
+					}
+
+					hr = m_pWICFactory->CreateBitmapScaler(&pScaler);
+					if (SUCCEEDED(hr))
+					{
+						hr = pScaler->Initialize(
+							pSource,
+							destinationWidth,
+							destinationHeight,
+							WICBitmapInterpolationModeCubic
+						);
+					}
+					if (SUCCEEDED(hr))
+					{
+						hr = pConverter->Initialize(
+							pScaler,
+							GUID_WICPixelFormat32bppPBGRA,
+							WICBitmapDitherTypeNone,
+							NULL,
+							0.f,
+							WICBitmapPaletteTypeMedianCut
+						);
+					}
+				}
+			}
+			else // Don't scale the image.
+			{
+				hr = pConverter->Initialize(
+					pSource,
+					GUID_WICPixelFormat32bppPBGRA,
+					WICBitmapDitherTypeNone,
+					NULL,
+					0.f,
+					WICBitmapPaletteTypeMedianCut
+				);
+			}
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			//create a Direct2D bitmap from the WIC bitmap.
+			hr = m_pRenderTarget->CreateBitmapFromWicBitmap(
+				pConverter,
+				NULL,
+				(ID2D1Bitmap**)ppBitmap
+			);
+		}
+
+
+		D2DSafeRelease(&pDecoder);
+		D2DSafeRelease(&pSource);
+		D2DSafeRelease(&pStream);
+		D2DSafeRelease(&pConverter);
+		D2DSafeRelease(&pScaler);
+
+
+		if (hr == S_OK)
+			return 0;
+		else
+			return -2;
+	}
+
+	void D2DRender::DrawBitmap(Bitmap * bitmap, int x, int y)
+	{
+		if (m_pRenderTarget == NULL || bitmap == NULL)
+			return;
+
+		ID2D1Bitmap *pBitmap = (ID2D1Bitmap *)bitmap;
+
+		D2D1_SIZE_F size = pBitmap->GetSize();
+
+		m_pRenderTarget->DrawBitmap(pBitmap, D2D1::RectF(x, y, size.width, size.height));
+	}
+
+	//可重入
 	HRESULT D2DRender::CreateDeviceIndependentResources()
 	{
 		HRESULT hr = S_OK;
 
 		if(!m_pDirect2dFactory)
 			hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pDirect2dFactory);
+
+
+		if (SUCCEEDED(hr) && (!m_pWICFactory))
+		{
+			// Create WIC factory.
+			hr = CoCreateInstance(CLSID_WICImagingFactory, NULL,
+					CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,
+				reinterpret_cast<void **>(&m_pWICFactory));
+		}
 
 
 		if (m_bFPS)
@@ -239,16 +565,15 @@ namespace SGF
 					L"", //locale
 					&m_pTextFormat
 				);
-			}
 
 
-			if (SUCCEEDED(hr) && m_pTextFormat)
-			{
-				// Center the text horizontally and vertically.
-				m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-				m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+				if (SUCCEEDED(hr) && m_pTextFormat)
+				{
+					// Center the text horizontally and vertically.
+					m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+					m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+				}
 			}
-			
 		}
 
 		return hr;
@@ -260,6 +585,7 @@ namespace SGF
 		D2DSafeRelease(&m_pTextFormat);
 		D2DSafeRelease(&m_pDWriteFactory);
 		D2DSafeRelease(&m_pDirect2dFactory);
+		D2DSafeRelease(&m_pWICFactory);
 	}
 
 	

@@ -26,7 +26,7 @@ int WINAPI WinMain(
 	GameInterface* pGameInterface = NULL;
 
 	SGF::DLLModule dl;
-	if (dl.Open(TEXT("./DigitalRain.dll")) < 0)
+	if (dl.Open(TEXT("./WaterWave.dll")) < 0)
 	{
 		MessageBox(NULL, TEXT("¼ÓÔØÓÎÏ·DLLÊ§°Ü£¡"), TEXT("´íÎó"), MB_OK);
 		return -1;
