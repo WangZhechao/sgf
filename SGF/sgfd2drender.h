@@ -45,7 +45,28 @@ namespace SGF
 			Bitmap **ppBitmap);
 
 
+		virtual int LoadBitmapFromFile(
+			PCWSTR filename,
+			UINT destinationWidth,
+			UINT destinationHeight,
+			BitmapPixels* pPixels);
+
+
+		//绘制图像
 		virtual void DrawBitmap(Bitmap* bitmap, int x, int y);
+
+		//获取位图格式
+		virtual BitmapProperties GetBitmapProperties(Bitmap* bitmap);
+
+		//创建图像
+		virtual int CreateBitmap(unsigned int w, unsigned int h, void* data, BitmapProperties* props, Bitmap **ppBitmap);
+
+
+		//Copy图像
+		virtual int CopyBmpToBmp(Bitmap* desc, unsigned int x, unsigned int y,
+			Bitmap *src, unsigned int w, unsigned int h);
+
+		virtual int CopyMemToBmp(Bitmap* dst, RECT& rect, void* src, unsigned int pitch);
 
 	public:
 		//未完善接口

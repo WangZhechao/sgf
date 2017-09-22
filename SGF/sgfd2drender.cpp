@@ -506,6 +506,179 @@ namespace SGF
 			return -2;
 	}
 
+
+	int D2DRender::LoadBitmapFromFile(
+		PCWSTR filename,
+		UINT destinationWidth,
+		UINT destinationHeight,
+		BitmapPixels* pPixels)
+	{
+		HRESULT hr = S_OK;
+
+		IWICBitmapDecoder *pDecoder = NULL;
+		IWICBitmapFrameDecode *pSource = NULL;
+		IWICStream *pStream = NULL;
+		IWICFormatConverter *pConverter = NULL;
+		IWICBitmapScaler *pScaler = NULL;
+		IWICBitmap *pBitmap = NULL;
+
+		if (!m_pWICFactory) {
+			return -1;
+		}
+
+
+		hr = m_pWICFactory->CreateDecoderFromFilename(
+			filename,
+			NULL,
+			GENERIC_READ,
+			WICDecodeMetadataCacheOnLoad,
+			&pDecoder
+		);
+
+		if (SUCCEEDED(hr))
+		{
+			// Create the initial frame.
+			hr = pDecoder->GetFrame(0, &pSource);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			// Convert the image format to 32bppPBGRA
+			// (DXGI_FORMAT_B8G8R8A8_UNORM + D2D1_ALPHA_MODE_PREMULTIPLIED).
+			hr = m_pWICFactory->CreateFormatConverter(&pConverter);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			// If a new width or height was specified, create an
+			// IWICBitmapScaler and use it to resize the image.
+			if (destinationWidth != 0 || destinationHeight != 0)
+			{
+				UINT originalWidth, originalHeight;
+				hr = pSource->GetSize(&originalWidth, &originalHeight);
+				if (SUCCEEDED(hr))
+				{
+					if (destinationWidth == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationHeight) / static_cast<FLOAT>(originalHeight);
+						destinationWidth = static_cast<UINT>(scalar * static_cast<FLOAT>(originalWidth));
+					}
+					else if (destinationHeight == 0)
+					{
+						FLOAT scalar = static_cast<FLOAT>(destinationWidth) / static_cast<FLOAT>(originalWidth);
+						destinationHeight = static_cast<UINT>(scalar * static_cast<FLOAT>(originalHeight));
+					}
+
+					hr = m_pWICFactory->CreateBitmapScaler(&pScaler);
+					if (SUCCEEDED(hr))
+					{
+						hr = pScaler->Initialize(
+							pSource,
+							destinationWidth,
+							destinationHeight,
+							WICBitmapInterpolationModeCubic
+						);
+					}
+					if (SUCCEEDED(hr))
+					{
+						hr = pConverter->Initialize(
+							pScaler,
+							GUID_WICPixelFormat32bppPBGRA,
+							WICBitmapDitherTypeNone,
+							NULL,
+							0.f,
+							WICBitmapPaletteTypeMedianCut
+						);
+					}
+				}
+			}
+			else // Don't scale the image.
+			{
+				hr = pConverter->Initialize(
+					pSource,
+					GUID_WICPixelFormat32bppPBGRA,
+					WICBitmapDitherTypeNone,
+					NULL,
+					0.f,
+					WICBitmapPaletteTypeMedianCut
+				);
+			}
+		}
+
+
+		UINT width = 0, height = 0;
+
+		if (SUCCEEDED(hr))
+		{
+			hr = pConverter->GetSize(&width, &height);
+		}
+
+		if (SUCCEEDED(hr))
+		{
+			hr = m_pWICFactory->CreateBitmapFromSourceRect(
+				pConverter, 0, 0, width, height, &pBitmap);
+		}
+
+		IWICBitmapLock *pILock = NULL;
+		WICRect rcLock = { 0, 0, width, height };
+		if (SUCCEEDED(hr))
+		{
+			hr = pBitmap->Lock(&rcLock, WICBitmapLockRead, &pILock);
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			BYTE *pv = NULL;
+			UINT size = 0;
+
+			hr = pILock->GetDataPointer(&size, (WICInProcPointer*)&pv);
+			if (SUCCEEDED(hr))
+			{
+				if (pPixels)
+				{
+					pPixels->data = new unsigned char[size];
+					memcpy(pPixels->data, pv, size);
+					
+					pPixels->size = size;
+				}
+
+				pILock->Release();
+			}
+		}
+
+
+		if (SUCCEEDED(hr))
+		{
+			ID2D1Bitmap *pBmp = NULL;
+			//create a Direct2D bitmap from the WIC bitmap.
+			hr = m_pRenderTarget->CreateBitmapFromWicBitmap(
+				pConverter,
+				NULL,
+				&pBmp
+			);
+
+			pPixels->props = GetBitmapProperties(pBmp);
+			D2DSafeRelease(&pBmp);
+		}
+
+
+		D2DSafeRelease(&pDecoder);
+		D2DSafeRelease(&pSource);
+		D2DSafeRelease(&pStream);
+		D2DSafeRelease(&pConverter);
+		D2DSafeRelease(&pScaler);
+		D2DSafeRelease(&pBitmap);
+
+
+		if (hr == S_OK)
+			return 0;
+		else
+			return -2;
+	}
+
+
 	void D2DRender::DrawBitmap(Bitmap * bitmap, int x, int y)
 	{
 		if (m_pRenderTarget == NULL || bitmap == NULL)
@@ -517,6 +690,94 @@ namespace SGF
 
 		m_pRenderTarget->DrawBitmap(pBitmap, D2D1::RectF(x, y, size.width, size.height));
 	}
+
+	BitmapProperties D2DRender::GetBitmapProperties(Bitmap * bitmap)
+	{
+		BitmapProperties props = { 0 };
+		ID2D1Bitmap *pBitmap = (ID2D1Bitmap *)bitmap;
+
+		if (bitmap == NULL)
+			return props;
+
+		memcpy(&props.pixel_format, &pBitmap->GetPixelFormat(), sizeof(D2D1_PIXEL_FORMAT));
+		
+		D2D1_SIZE_F sizef = pBitmap->GetSize();
+		props.width = sizef.width;
+		props.height = sizef.height;
+
+		pBitmap->GetDpi(&props.dpiX, &props.dpiY);
+
+		return props;
+	}
+
+	int D2DRender::CreateBitmap(unsigned int w, unsigned int h, void * data, BitmapProperties * props, Bitmap ** ppBitmap)
+	{
+		if (m_pRenderTarget == NULL) {
+			(*ppBitmap) = NULL;
+			return -1;
+		}
+
+		if (w == 0)
+			w = props->width;
+
+		if (h == 0)
+			h = props->height;
+
+
+		D2D1_SIZE_U size = {w, h};
+		UINT32 pitch = size.width * 4;
+		D2D1_BITMAP_PROPERTIES bitmapFormat;
+		memcpy(&bitmapFormat, props, sizeof(D2D1_BITMAP_PROPERTIES));
+		
+
+		HRESULT hr = m_pRenderTarget->CreateBitmap(size, data, pitch, bitmapFormat, (ID2D1Bitmap**)ppBitmap);
+		if (hr == S_OK) {
+			return 0;
+		}
+
+		return -2;
+	}
+
+	int D2DRender::CopyBmpToBmp(Bitmap * desc, unsigned int x, unsigned int y, Bitmap * src, unsigned int w, unsigned int h)
+	{
+		ID2D1Bitmap *descBmp = (ID2D1Bitmap *)desc;
+		ID2D1Bitmap *srcBmp = (ID2D1Bitmap *)src;
+
+		if (descBmp == NULL || srcBmp == NULL) {
+			return -1;
+		}
+
+		
+		D2D1_POINT_2U point = { x, y };
+		D2D1_RECT_U rect = { 0, 0, w, h };
+
+		HRESULT hr = descBmp->CopyFromBitmap(&point, srcBmp, &rect);
+		if (hr == S_OK) {
+			return 0;
+		}
+
+		return -2;
+	}
+
+
+	int D2DRender::CopyMemToBmp(Bitmap* dst, RECT& rt, void* src, unsigned int pitch)
+	{
+		ID2D1Bitmap *dstBmp = (ID2D1Bitmap *)dst;
+		if (dstBmp == NULL || src == NULL) {
+			return -1;
+		}
+
+		D2D1_RECT_U rect = { 0 };
+		memcpy(&rect, &rt, sizeof(rect));
+
+		HRESULT hr = dstBmp->CopyFromMemory(&rect, src, pitch);
+		if (hr == S_OK) {
+			return 0;
+		}
+
+		return -2;
+	}
+
 
 	//ø…÷ÿ»Î
 	HRESULT D2DRender::CreateDeviceIndependentResources()

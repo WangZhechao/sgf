@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SGF", "SGF\SGF.vcxproj", "{82EEB8AE-BEAC-48E1-B7B7-4EA33DF53670}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D723400D-1F35-44F8-896F-2D8526CE0118} = {D723400D-1F35-44F8-896F-2D8526CE0118}
+		{E019CB5C-75C3-46B4-A1E4-26A6CAB3E52F} = {E019CB5C-75C3-46B4-A1E4-26A6CAB3E52F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{EF98521B-EF6D-4AE1-9355-D2D4F1F9426A}"
 EndProject
