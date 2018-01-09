@@ -1,5 +1,6 @@
 #include "sgfeventdispatcher.h"
 #include "sgfeventlistenerkeyboard.h"
+#include "sgfeventlistenermouse.h"
 #include <assert.h>
 
 namespace SGF
@@ -7,6 +8,7 @@ namespace SGF
 
 static EventListener::ListenerID __getListenerID(Event* event)
 {
+	//TODO: ´ýÍêÉÆ
 	EventListener::ListenerID ret;
 	switch (event->getType())
 	{
@@ -20,9 +22,9 @@ static EventListener::ListenerID __getListenerID(Event* event)
 	case Event::Type::KEYBOARD:
 		ret = EventListenerKeyboard::LISTENER_ID;
 		break;
-	//case Event::Type::MOUSE:
-	//	ret = EventListenerMouse::LISTENER_ID;
-	//	break;
+	case Event::Type::MOUSE:
+		ret = EventListenerMouse::LISTENER_ID;
+		break;
 
 	default:
 		assert(false && "Invalid type!");

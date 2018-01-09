@@ -771,7 +771,7 @@ int D2DRender::copyBmpToBmp(Bitmap * desc, unsigned int x, unsigned int y, Bitma
 }
 
 
-int D2DRender::copyMemToBmp(Bitmap* dst, RECT& rt, void* src, unsigned int pitch)
+int D2DRender::copyMemToBmp(Bitmap* dst, const RECT& rt, void* src, unsigned int pitch)
 {
 	ID2D1Bitmap *dstBmp = (ID2D1Bitmap *)dst;
 	if (dstBmp == NULL || src == NULL) {
@@ -800,10 +800,21 @@ HRESULT D2DRender::createDeviceIndependentResources()
 		hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &_direct2dFactory);
 
 
+	//’‚¿Ô∫‹∆Êπ÷
 	if (SUCCEEDED(hr) && (!_wicFactory))
 	{
 		// Create WIC factory.
 		hr = CoCreateInstance(CLSID_WICImagingFactory, NULL,
+			CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,
+			reinterpret_cast<void **>(&_wicFactory));
+	}
+
+
+	//WIN7 ◊¢≤· ß∞‹£¨‘Ÿ◊¢≤·
+	if (FAILED(hr) && (!_wicFactory))
+	{
+		// Create WIC factory.
+		hr = CoCreateInstance(CLSID_WICImagingFactory1, NULL,
 			CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,
 			reinterpret_cast<void **>(&_wicFactory));
 	}

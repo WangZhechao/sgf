@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include "interface.h"
+#include "sgfeventdispatcher.h"
 
 namespace SGF
 {
@@ -20,14 +21,15 @@ public:
 	void run(GameInterface* game);
 
 public:
-	void setDefFPS(int fps);
+	void setUpdateFPS(int fps);
 	void setGameTitle(const TCHAR* title);
 	void setWindowSize(const SIZE& size);
 	HWND getWnd();
 
 private:
 	SIZE getHightDpiWindowSize(const SIZE& size);
-	int registerClassAndCreateWindow();
+	int registerWinClass();
+	int createWindow();
 	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	
 	

@@ -19,29 +19,29 @@ public:
 	};
 
 
-	enum class MouseButton
+	enum MouseButton
 	{
-		BUTTON_UNSET = -1,
-		BUTTON_LEFT = 0,
-		BUTTON_RIGHT = 1,
-		BUTTON_MIDDLE = 2
+		BUTTON_UNSET = 0,
+		BUTTON_LEFT = 1,
+		BUTTON_RIGHT = 2,
+		BUTTON_MIDDLE = 4
 	};
 
 
 public:
 	EventMouse(MouseEventType mouseEventCode);
-
+	void setCursorPosition(int x, int y);
 
 public:
-	void setMouseButton(MouseButton button) { _mouseButton = button; }
-	MouseButton getMouseButton() const { return _mouseButton; }
+	void setMouseButton(int buttons) { _mouseButton = buttons; }
+
 	int getCursorX() const { return _x; }
 	int getCursorY() const { return _y; }
 
 
 private:
 	MouseEventType _mouseEventType;
-	MouseButton _mouseButton;
+	int _mouseButton;
 	int _x;
 	int _y;
 

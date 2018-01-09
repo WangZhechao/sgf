@@ -2,8 +2,11 @@
 #include "sgferr.h"
 #include "interface.h"
 #include "sgfrender.h"
+#include "sgfeventmouse.h"
+#include "sgfeventdispatcher.h"
 #include <math.h>
 #include <tchar.h>
+#include <assert.h>
 
 #define APP_CLASS_NAME TEXT("SGFWinAppClass")
 #define APP_WIN_NAME TEXT("SGFWinApp")
@@ -34,11 +37,15 @@ WinApp::WinApp(HINSTANCE hinstance) :
 
 	memset(_title, 0, sizeof(_title));
 	_stprintf(_title, TEXT("%s"), APP_WIN_NAME);
+
+	int reg = registerWinClass();
+	assert(reg == ERR_NONE);
 }
 
 
 WinApp::~WinApp()
 {
+	UnregisterClass(APP_CLASS_NAME, _instance);
 }
 
 
@@ -77,10 +84,8 @@ SIZE WinApp::getHightDpiWindowSize(const SIZE& size)
 	return adjustSize;
 }
 
-
-
-//注册窗口类，创建窗口
-int WinApp::registerClassAndCreateWindow()
+//注册窗口类
+int WinApp::registerWinClass()
 {
 	//定义填充窗口 
 	WNDCLASSEX wcex;
@@ -105,7 +110,14 @@ int WinApp::registerClassAndCreateWindow()
 		return ERR_REGISTER_CLASS_FAIL;
 	}
 
+	return ERR_NONE;
+}
 
+
+
+//注册窗口类，创建窗口
+int WinApp::createWindow()
+{
 	//获取真实宽高
 	_winSize = getHightDpiWindowSize(_winSize);
 
@@ -192,6 +204,32 @@ LRESULT CALLBACK WinApp::wndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 			}
 			break;
 
+			case WM_MOUSEMOVE:
+			{
+				EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+
+				int buttons = EventMouse::MouseButton::BUTTON_UNSET;
+				if (wParam & MK_LBUTTON) {
+					buttons |= EventMouse::MouseButton::BUTTON_LEFT;
+				}
+				if (wParam & MK_MBUTTON) {
+					buttons |= EventMouse::MouseButton::BUTTON_MIDDLE;
+				}
+				if (wParam & MK_RBUTTON) {
+					buttons |= EventMouse::MouseButton::BUTTON_RIGHT;
+				}
+
+				event.setMouseButton(buttons);
+				event.setCursorPosition(LOWORD(lParam), HIWORD(lParam));
+
+				if (pApp->_modules && !pApp->_modules->eventDispatcher.expired())
+				{
+					auto eventDispatcher = pApp->_modules->eventDispatcher.lock();
+					eventDispatcher->dispatchEvent(&event);
+				}
+			}
+			break;
+
 			//case WM_PAINT:
 			//{
 			//	//窗口模式，渲染
@@ -274,7 +312,7 @@ void WinApp::setWindowSize(const SIZE& size)
 }
 
 
-void WinApp::setDefFPS(int fps)
+void WinApp::setUpdateFPS(int fps)
 {
 	if (fps <= 0)
 		_fps = DEFAULT_FPS;
@@ -293,7 +331,7 @@ int WinApp::initialize(Modules* modules)
 {
 	_modules = modules;
 
-	return registerClassAndCreateWindow();
+	return createWindow();
 }
 
 
@@ -389,8 +427,6 @@ void WinApp::run(GameInterface* game)
 		DestroyWindow(_wnd);
 		_wnd = 0;
 	}
-
-	UnregisterClass(APP_CLASS_NAME, _instance);
 }
 
 

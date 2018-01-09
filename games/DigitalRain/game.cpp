@@ -42,7 +42,7 @@ static void initGame(Modules* modules)
 	if (g_modules && !g_modules->winApp.expired())
 	{
 		auto win = g_modules->winApp.lock();
-		win->setDefFPS(30);
+		win->setUpdateFPS(30);
 		win->setGameTitle(TEXT("Êı×ÖÓê"));
 	}
 }

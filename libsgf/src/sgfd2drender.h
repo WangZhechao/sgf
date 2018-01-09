@@ -68,7 +68,7 @@ public:
 	virtual int copyBmpToBmp(Bitmap* desc, unsigned int x, unsigned int y,
 		Bitmap *src, unsigned int w, unsigned int h);
 
-	virtual int copyMemToBmp(Bitmap* dst, RECT& rect, void* src, unsigned int pitch);
+	virtual int copyMemToBmp(Bitmap* dst, const RECT& rect, void* src, unsigned int pitch);
 
 
 public:

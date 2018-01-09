@@ -14,5 +14,10 @@ EventMouse::EventMouse(MouseEventType mouseEventCode)
 }
 
 
+void EventMouse::setCursorPosition(int x, int y)
+{
+	_x = x;
+	_y = y;
+}
 
 }
