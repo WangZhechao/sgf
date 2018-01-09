@@ -721,7 +721,7 @@ BitmapProperties D2DRender::getBitmapProperties(Bitmap * bitmap)
 	return props;
 }
 
-int D2DRender::createBitmap(unsigned int w, unsigned int h, void * data, BitmapProperties * props, Bitmap ** ppBitmap)
+int D2DRender::createBitmap(unsigned int w, unsigned int h, void *data, BitmapProperties * props, Bitmap ** ppBitmap)
 {
 	if (_renderTarget == NULL) {
 		(*ppBitmap) = NULL;
@@ -987,8 +987,14 @@ void D2DRender::destoryTextFormat(TextFormat* format)
 		return;
 
 	D2DTextFormat *d2dformat = (D2DTextFormat *)format;
-	D2DSafeRelease(&(d2dformat->textBrush));
-	D2DSafeRelease(&(d2dformat->textFormat));
+	if (d2dformat)
+	{
+		D2DSafeRelease(&(d2dformat->textBrush));
+		D2DSafeRelease(&(d2dformat->textFormat));
+
+		delete d2dformat;
+		d2dformat = NULL;
+	}
 }
 
 

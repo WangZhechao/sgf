@@ -423,6 +423,12 @@ void WinApp::run(GameInterface* game)
 	}
 
 
+	if (game && game->uninit)
+	{
+		game->uninit(_modules);
+	}
+
+
 	if (_wnd) {
 		DestroyWindow(_wnd);
 		_wnd = 0;

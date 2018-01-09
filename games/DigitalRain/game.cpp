@@ -30,7 +30,7 @@ static void initGame(Modules* modules)
 		auto render = g_modules->render.lock();
 		render->getSize(win);
 
-		g_numRain = new DigitalRain(win, font);
+		g_numRain = new (std::nothrow) DigitalRain(win, font);
 		if (g_numRain)
 		{
 			g_numRain->createFont(render.get());
