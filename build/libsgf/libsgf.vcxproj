@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{EAB9240A-E018-45BD-8C8C-4AFA7B0EFB86}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libsgf</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Configuration)\objs\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Configuration)\objs\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\..\libsgf\3rdParty\lua;..\..\libsgf\3rdParty\nginx;..\..\libsgf\3rdParty\;..\..\libsgf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..\..\libsgf\3rdParty\lua;..\..\libsgf\3rdParty\nginx;..\..\libsgf\3rdParty\;..\..\libsgf\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lapi.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lauxlib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lbaselib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lcode.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ldblib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ldebug.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ldo.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ldump.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lfunc.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lgc.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\linit.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\liolib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\llex.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lmathlib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lmem.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\loadlib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lobject.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lopcodes.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\loslib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lparser.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lstate.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lstring.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lstrlib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ltable.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ltablib.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\ltm.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\luac.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lundump.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lvm.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\lzio.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\lua\print.c" />
+    <ClCompile Include="..\..\libsgf\3rdParty\nginx\ngx_event_timer.cpp" />
+    <ClCompile Include="..\..\libsgf\3rdParty\nginx\ngx_rbtree.cpp" />
+    <ClCompile Include="..\..\libsgf\3rdParty\nginx\ngx_time.cpp" />
+    <ClCompile Include="..\..\libsgf\3rdParty\nginx\ngx_times.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfd2drender.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfdl.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfevent.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventcustom.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventdispatcher.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventkeyboard.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventlistener.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventlistenercustom.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventlistenerkeyboard.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventlistenermouse.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfeventmouse.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgflog.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgftimer.cpp" />
+    <ClCompile Include="..\..\libsgf\src\sgfwin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lapi.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lauxlib.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lcode.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\ldebug.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\ldo.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lfunc.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lgc.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\llex.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\llimits.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lmem.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lobject.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lopcodes.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lparser.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lstate.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lstring.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\ltable.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\ltm.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lua.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lua.hpp" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\luaconf.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lualib.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lundump.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lvm.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\lua\lzio.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_config.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_event.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_event_timer.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_rbtree.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_time.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_times.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\nginx\ngx_win32_config.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\async_logger.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\common.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\formatter.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\logger.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\spdlog.h" />
+    <ClInclude Include="..\..\libsgf\3rdParty\spdlog\tweakme.h" />
+    <ClInclude Include="..\..\libsgf\src\interface.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfbitmappixels.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfd2drender.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfdl.h" />
+    <ClInclude Include="..\..\libsgf\src\sgferr.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfevent.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventcustom.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventdispatcher.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventkeyboard.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventlistener.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventlistenercustom.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventlistenerkeyboard.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventlistenermouse.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfeventmouse.h" />
+    <ClInclude Include="..\..\libsgf\src\sgflog.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfrender.h" />
+    <ClInclude Include="..\..\libsgf\src\sgftimer.h" />
+    <ClInclude Include="..\..\libsgf\src\sgfwin.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
