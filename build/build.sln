@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsgf", "libsgf\libsgf.vcxproj", "{EAB9240A-E018-45BD-8C8C-4AFA7B0EFB86}"
 EndProject
@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaterWave", "games\WaterWav
 	ProjectSection(ProjectDependencies) = postProject
 		{EAB9240A-E018-45BD-8C8C-4AFA7B0EFB86} = {EAB9240A-E018-45BD-8C8C-4AFA7B0EFB86}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tetris", "games\Tetris\Tetris.vcxproj", "{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,14 @@ Global
 		{3647AE63-E545-48B0-98AB-02DDB957E1BA}.Release|x64.Build.0 = Release|x64
 		{3647AE63-E545-48B0-98AB-02DDB957E1BA}.Release|x86.ActiveCfg = Release|Win32
 		{3647AE63-E545-48B0-98AB-02DDB957E1BA}.Release|x86.Build.0 = Release|Win32
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Debug|x64.ActiveCfg = Debug|x64
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Debug|x64.Build.0 = Debug|x64
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Debug|x86.ActiveCfg = Debug|Win32
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Debug|x86.Build.0 = Debug|Win32
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Release|x64.ActiveCfg = Release|x64
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Release|x64.Build.0 = Release|x64
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Release|x86.ActiveCfg = Release|Win32
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +85,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{13AA2AD7-C454-4FA8-9B1A-68FF985103AF} = {FC82FFB2-D403-45C2-855C-ECE2F56D7C4B}
 		{3647AE63-E545-48B0-98AB-02DDB957E1BA} = {FC82FFB2-D403-45C2-855C-ECE2F56D7C4B}
+		{62ACDB4C-C682-42A3-BF33-7CFE9625A3DE} = {FC82FFB2-D403-45C2-855C-ECE2F56D7C4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E96C9ABA-D8EE-491B-97B2-1E1E4597D262}
