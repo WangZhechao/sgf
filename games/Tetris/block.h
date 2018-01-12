@@ -1,9 +1,10 @@
 #pragma once
 
 #include <Windows.h>
-#include <bitset>
 
-enum class BlockType
+class Tetris;
+
+enum BlockType
 {
 	BT_S = 0,
 	BT_Z,
@@ -16,7 +17,7 @@ enum class BlockType
 };
 
 
-enum class BlockState
+enum BlockState
 {
 	BS_T = 0,
 	BS_R,
@@ -43,19 +44,31 @@ public:
 	Block();
 	Block(const Block& block);
 	Block(BlockType type, BlockState state);
+	Block(const POINT& pos, BlockType type, BlockState state);
 	Block& operator = (const Block& block);
+
+
+private:
+	//ºÏ²¢
+	void merge(Tetris *tetris);
+
+	//Åö×²¼ì²â
+	bool hitTest(Tetris *tetris);
 
 
 public:
 	//Ðý×ª
-	bool rotate();
+	bool rotate(Tetris*);
 
 	//ÏÂÂä
-	bool dropDown();
+	bool drop(Tetris*);
+
+	//ÏÂÒÆ
+	bool downMove(Tetris*);
 
 	//×óÒÆ
-	bool leftMove();
+	bool leftMove(Tetris*);
 
 	//ÓÒÒÆ
-	bool rightMove();
+	bool rightMove(Tetris*);
 };

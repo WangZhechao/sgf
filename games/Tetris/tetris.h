@@ -12,7 +12,8 @@ enum class TetrisState
 
 
 const int TETRIS_CONTAINER_WIDTH = 10;
-const int TETRIS_CONTAINER_HEIGHT = 22;
+const int TETRIS_CONTAINER_HEIGHT = 24;
+const int TETRIS_CONTAINER_HIDE_HEIGHT = BLOCK_HEIGHT;
 
 const int TETRIS_MAX_SCORE = 999999; //最高分
 const int TETRIS_MAX_LEVEL = 10;	 //最高等级
@@ -21,6 +22,8 @@ const int TETRIS_MAX_LINE = 999999;	 //最大行
 
 class Tetris
 {
+	friend class Block;
+
 private:
 	unsigned long _blockContainer[TETRIS_CONTAINER_HEIGHT];
 	Block _blocks[2];

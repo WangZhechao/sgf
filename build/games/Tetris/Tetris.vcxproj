@@ -149,8 +149,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\games\Tetris\block.cpp" />
     <ClCompile Include="..\..\..\games\Tetris\dllmain.cpp" />
     <ClCompile Include="..\..\..\games\Tetris\game.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\games\Tetris\block.h" />
+    <ClInclude Include="..\..\..\games\Tetris\tetris.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
