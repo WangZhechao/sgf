@@ -689,7 +689,7 @@ int D2DRender::loadBitmapFromFile(
 }
 
 
-void D2DRender::drawBitmap(Bitmap* bitmap, int x, int y)
+void D2DRender::drawBitmap(int x, int y, Bitmap* bitmap)
 {
 	if (_renderTarget == NULL || bitmap == NULL)
 		return;
@@ -698,7 +698,44 @@ void D2DRender::drawBitmap(Bitmap* bitmap, int x, int y)
 
 	D2D1_SIZE_F size = pBitmap->GetSize();
 
-	_renderTarget->DrawBitmap(pBitmap, D2D1::RectF(x, y, size.width, size.height));
+	_renderTarget->DrawBitmap(pBitmap, D2D1::RectF(x, y, x+size.width, y+size.height));
+}
+
+
+void D2DRender::drawBitmap(int dx, int dy, Bitmap* bitmap,
+	int sx, int sy, int sw, int sh)
+{
+	if (_renderTarget == NULL || bitmap == NULL)
+		return;
+
+	ID2D1Bitmap *pBitmap = (ID2D1Bitmap *)bitmap;
+
+	D2D1_SIZE_F size = pBitmap->GetSize();
+	if (sw <= 0)
+		sw = size.width;
+	if (sh <= 0)
+		sh = size.height;
+
+	_renderTarget->DrawBitmap(pBitmap, D2D1::RectF(dx, dy, dx+sw, dy+sh),
+		1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, D2D1::RectF(sx, sy, sx+sw, sy+sh));
+}
+
+void D2DRender::drawBitmap(int dx, int dy, int dw, int dh, Bitmap * bitmap, int sx, int sy, int sw, int sh)
+{
+	if (_renderTarget == NULL || bitmap == NULL)
+		return;
+
+	ID2D1Bitmap *pBitmap = (ID2D1Bitmap *)bitmap;
+
+	D2D1_SIZE_F size = pBitmap->GetSize();
+	if (sw <= 0) sw = size.width;
+	if (sh <= 0) sh = size.height;
+
+	if (dw <= 0) dw = sw;
+	if (dh <= 0) dh = sh;
+
+	_renderTarget->DrawBitmap(pBitmap, D2D1::RectF(dx, dy, dx+dw, dy+dh),
+		1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, D2D1::RectF(sx, sy, sx+sw, sy+sh));
 }
 
 

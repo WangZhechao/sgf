@@ -77,7 +77,11 @@ public:
 
 
 	//绘制图像
-	virtual void drawBitmap(Bitmap* bitmap, int x, int y) = 0;
+	virtual void drawBitmap(int x, int y, Bitmap* bitmap) = 0;
+	virtual void drawBitmap(int dx, int dy, Bitmap* bitmap,
+		int sx, int sy, int sw, int sh) = 0;
+	virtual void drawBitmap(int dx, int dy, int dw, int dh,
+		Bitmap* bitmap, int sx, int sy, int sw, int sh) = 0;
 
 	//获取位图格式
 	virtual BitmapProperties getBitmapProperties(Bitmap* bitmap) = 0;

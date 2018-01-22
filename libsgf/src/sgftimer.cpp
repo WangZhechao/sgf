@@ -31,14 +31,14 @@ void Timer::update(float t)
 }
 
 
-void Timer::add(timer *ev)
+void Timer::add(Timer *ev)
 {
 	if(ev)
 		ngx_add_timer(ev, ev->cycle);
 }
 
 
-void Timer::del(timer *ev)
+void Timer::del(Timer *ev)
 {
 	if (ev)
 		ngx_del_timer(ev);

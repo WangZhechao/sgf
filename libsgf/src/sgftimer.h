@@ -7,13 +7,13 @@ namespace SGF
 
 namespace Timer
 {
-	typedef ngx_event_t timer;
+	typedef ngx_event_t Timer;
 
 	bool init();
 	void unInit();
 	void update(float t);
-	void add(timer *ev);
-	void del(timer *ev);
+	void add(Timer *ev);
+	void del(Timer *ev);
 }
 
 }

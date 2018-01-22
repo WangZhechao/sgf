@@ -307,8 +307,15 @@ void WinApp::setWindowSize(const SIZE& size)
 	_winSize = size;
 	SIZE hdpi = getHightDpiWindowSize(_winSize);
 
-	if(_wnd)
-		::SetWindowPos(_wnd, NULL, 0, 0, hdpi.cx, hdpi.cy, SWP_NOZORDER | SWP_NOMOVE);
+	if (_wnd)
+	{
+		const int SCREEN_WIDTH = GetSystemMetrics(SM_CXSCREEN);
+		const int SCREEN_HEIGHT = GetSystemMetrics(SM_CYSCREEN);
+
+		::SetWindowPos(_wnd, NULL, (SCREEN_WIDTH-hdpi.cx) * 0.5f, 
+			(SCREEN_HEIGHT - hdpi.cy) * 0.5f, hdpi.cx, 
+			hdpi.cy, SWP_NOZORDER);
+	}
 }
 
 
