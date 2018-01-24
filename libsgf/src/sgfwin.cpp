@@ -3,6 +3,7 @@
 #include "interface.h"
 #include "sgfrender.h"
 #include "sgfeventmouse.h"
+#include "sgfeventkeyboard.h"
 #include "sgfeventdispatcher.h"
 #include <math.h>
 #include <tchar.h>
@@ -203,6 +204,55 @@ LRESULT CALLBACK WinApp::wndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 				wasHandled = true;
 			}
 			break;
+
+
+			case WM_KEYDOWN:
+			{
+				EventKeyboard::KeyCode code = EventKeyboard::KeyCode::KEY_NONE;
+
+				switch (wParam)
+				{
+				case VK_ESCAPE: code = EventKeyboard::KeyCode::KEY_ESCAPE; break;
+				case VK_SPACE: code = EventKeyboard::KeyCode::KEY_SPACE; break;
+				case VK_UP: code = EventKeyboard::KeyCode::KEY_UP; break;
+				case VK_LEFT: code = EventKeyboard::KeyCode::KEY_LEFT; break;
+				case VK_RIGHT: code = EventKeyboard::KeyCode::KEY_RIGHT; break;
+				case VK_DOWN: code = EventKeyboard::KeyCode::KEY_DOWN; break;
+				}
+
+				EventKeyboard event(code, true);
+				if (pApp->_modules && !pApp->_modules->eventDispatcher.expired())
+				{
+					auto eventDispatcher = pApp->_modules->eventDispatcher.lock();
+					eventDispatcher->dispatchEvent(&event);
+				}
+			}
+			break;
+
+
+			case WM_KEYUP:
+			{
+				EventKeyboard::KeyCode code = EventKeyboard::KeyCode::KEY_NONE;
+
+				switch (wParam)
+				{
+				case VK_ESCAPE: code = EventKeyboard::KeyCode::KEY_ESCAPE; break;
+				case VK_SPACE: code = EventKeyboard::KeyCode::KEY_SPACE; break;
+				case VK_UP: code = EventKeyboard::KeyCode::KEY_UP; break;
+				case VK_LEFT: code = EventKeyboard::KeyCode::KEY_LEFT; break;
+				case VK_RIGHT: code = EventKeyboard::KeyCode::KEY_RIGHT; break;
+				case VK_DOWN: code = EventKeyboard::KeyCode::KEY_DOWN; break;
+				}
+
+				EventKeyboard event(code, false);
+				if (pApp->_modules && !pApp->_modules->eventDispatcher.expired())
+				{
+					auto eventDispatcher = pApp->_modules->eventDispatcher.lock();
+					eventDispatcher->dispatchEvent(&event);
+				}
+			}
+			break;
+
 
 			case WM_MOUSEMOVE:
 			{
