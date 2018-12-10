@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{931b2fc1-aa8e-47d0-8b0f-c4f0855da8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\app">
+      <UniqueIdentifier>{8b6efe05-d3bf-4915-b412-07602f159e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\err">
+      <UniqueIdentifier>{74a6dcca-b5c8-4513-8b9a-ff7bbd1f9f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{acb24758-bcb0-4e33-9c5f-aeffbbdb9f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input\event">
+      <UniqueIdentifier>{83803c71-c03b-48aa-a3a7-3bfbc2362469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input\listener">
+      <UniqueIdentifier>{decdb959-3c21-485d-b69a-d3770f125a45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{861f428b-e3d8-43c6-9e22-c3b1fc1100d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\win">
+      <UniqueIdentifier>{de7f1af8-f38d-42bb-a3e8-c0c0c5b41440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sound">
+      <UniqueIdentifier>{654f85dd-6737-4eed-821e-421e03ad4307}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sgfbasewindow.cpp">
+      <Filter>src\win</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfgameapp.cpp">
+      <Filter>src\app</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfevent.cpp">
+      <Filter>src\input\event</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventcustom.cpp">
+      <Filter>src\input\event</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventkeyboard.cpp">
+      <Filter>src\input\event</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventmouse.cpp">
+      <Filter>src\input\event</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventlistener.cpp">
+      <Filter>src\input\listener</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventlistenercustom.cpp">
+      <Filter>src\input\listener</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventlistenerkeyboard.cpp">
+      <Filter>src\input\listener</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventlistenermouse.cpp">
+      <Filter>src\input\listener</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfeventdispatcher.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfd2drender.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="sgfsound.cpp">
+      <Filter>src\sound</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sgfbasewindow.h">
+      <Filter>src\win</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfgameapp.h">
+      <Filter>src\app</Filter>
+    </ClInclude>
+    <ClInclude Include="sgferr.h">
+      <Filter>src\err</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfevent.h">
+      <Filter>src\input\event</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventcustom.h">
+      <Filter>src\input\event</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventkeyboard.h">
+      <Filter>src\input\event</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventmouse.h">
+      <Filter>src\input\event</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventlistener.h">
+      <Filter>src\input\listener</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventlistenercustom.h">
+      <Filter>src\input\listener</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventlistenerkeyboard.h">
+      <Filter>src\input\listener</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventlistenermouse.h">
+      <Filter>src\input\listener</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfeventdispatcher.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfd2drender.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfbitmappixels.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sgftexture.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="sgfsound.h">
+      <Filter>src\sound</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="history.txt" />
+  </ItemGroup>
+</Project>

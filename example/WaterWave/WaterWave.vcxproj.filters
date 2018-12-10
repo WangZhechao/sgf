@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="d2dframe">
+      <UniqueIdentifier>{1bd541fc-6478-4bc2-9ff2-76d4e70ab1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{25696022-ee28-4fe6-bbc0-cc82b5291d69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfbasewindow.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfd2drender.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfevent.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventcustom.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventdispatcher.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventkeyboard.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistener.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenercustom.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenerkeyboard.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenermouse.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventmouse.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfgameapp.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="waterwave.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfsound.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\D2DFrame\sgfbasewindow.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfd2drender.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgferr.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfevent.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventcustom.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventdispatcher.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventkeyboard.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistener.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenercustom.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenerkeyboard.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenermouse.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventmouse.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfgameapp.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="waterwave.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="d2dframe">
+      <UniqueIdentifier>{ba7158e7-8032-4f8f-8aa8-dd093fc21657}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="2048.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfbasewindow.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfbitmappixels.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfd2drender.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgferr.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfevent.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventcustom.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventdispatcher.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventkeyboard.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistener.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenercustom.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenerkeyboard.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventlistenermouse.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfeventmouse.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfgameapp.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+    <ClInclude Include="tileresource.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weather.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\D2DFrame\sgfsound.h">
+      <Filter>d2dframe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\D2DFrame\sgfbasewindow.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfd2drender.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfevent.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventcustom.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventdispatcher.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventkeyboard.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistener.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenercustom.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenerkeyboard.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventlistenermouse.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfeventmouse.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfgameapp.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+    <ClCompile Include="2048.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tileresource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="weather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\D2DFrame\sgfsound.cpp">
+      <Filter>d2dframe</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="note.txt" />
+  </ItemGroup>
+</Project>

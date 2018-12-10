@@ -1,0 +1,54 @@
+
+		//绘制方块
+		for (int i = 0; i < VIEW_BUILD_SIZE; i++)
+		{
+			for (int j = 0; j < VIEW_BUILD_SIZE; j++)
+			{
+				//_cubes[i][j].draw(_d2dRender, 0, 0);
+			}
+		}
+
+		////上一半
+//for (int count = 1; count <= VIEW_BUILD_SIZE; count++)
+//{
+//	for (int index = 0; index < count; index++)
+//	{
+//		_cubes[index][VIEW_BUILD_SIZE - count + index].draw(_d2dRender, 0, 0);
+//	}
+//}
+
+////下一半
+//for (int count = 3; count > 0; count--)
+//{
+//	for (int index = 0; index < count; index++)
+//	{
+//		
+//	}
+//}
+
+
+//_cubes[0][1].draw(_d2dRender, 0, 0);
+
+//_cubes[3][3].draw(_d2dRender, 0, 0);
+//_cubes[2][2].draw(_d2dRender, 0, 0);
+//_cubes[1][1].draw(_d2dRender, 0, 0);
+//_cubes[0][0].draw(_d2dRender, 0, 0);
+
+//_cubes[1][0].draw(_d2dRender, 0, 0);
+//_cubes[2][0].draw(_d2dRender, 0, 0);
+//_cubes[3][0].draw(_d2dRender, 0, 0);
+
+	//xxx = (VIEW_BUILD_SIZE - 1) * CUBE_HEIGHT * 0.5f
+	//
+	//(0,0) -> (beginX + CUBE_WIDTH * 0.5 * 0, beginY + xxx + CUBE_HEIGHT * 0.5f * 0)
+
+	//(1,0) -> (beginX + CUBE_WIDTH * 0.5 * 1, beginY + xxx + CUBE_HEIGHT * 0.5f * 1)
+	//(2,0) -> (beginX + CUBE_WIDTH * 0.5 * 2, beginY + xxx + CUBE_HEIGHT * 0.5f * 2)
+
+	//(0,1) -> (beginX + CUBE_WIDTH * 0.5 * 1, beginY + xxx - CUBE_HEIGHT * 0.5f * 1)
+	//(0,2) -> (beginX + CUBE_WIDTH * 0.5 * 2, beginY + xxx - CUBE_HEIGHT * 0.5f * 2)
+
+	//(1,1) -> (beginX + CUBE_WIDTH * 0.5 * 2, beginY + xxx + CUBE_HEIGHT * 0.5f * 0)
+	//(2,2) -> (beginX + CUBE_WIDTH * 0.5 * 4, beginY + xxx + CUBE_HEIGHT * 0.5f * 0)
+
+	//(i, j) -> (beginX + CUBE_WIDTH * 0.5 * (i + j), beginY + xxx + CUBE_HEIGHT * 0.5f * (i-j))
