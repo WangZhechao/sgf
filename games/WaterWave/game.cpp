@@ -201,7 +201,7 @@ static void renderFrame(float dt)
 				(LONG)g_bg_pixels.props.width, (LONG)g_bg_pixels.props.height }),
 				g_water_pixels, g_bg_pixels.props.width * 4);
 
-			render->drawBitmap(g_bg, 0, 0);
+			render->drawBitmap(0, 0, g_bg);
 		}
 	}
 }

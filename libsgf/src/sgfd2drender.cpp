@@ -777,7 +777,7 @@ int D2DRender::createBitmap(unsigned int w, unsigned int h, void *data, BitmapPr
 	D2D1_BITMAP_PROPERTIES bitmapFormat;
 	memcpy(&bitmapFormat, props, sizeof(D2D1_BITMAP_PROPERTIES));
 
-
+	
 	HRESULT hr = _renderTarget->CreateBitmap(size, data, pitch, bitmapFormat, (ID2D1Bitmap**)ppBitmap);
 	if (hr == S_OK) {
 		return 0;

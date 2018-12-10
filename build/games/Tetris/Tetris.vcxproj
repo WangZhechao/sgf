@@ -92,7 +92,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;TETRIS_EXPORTS;_DEBUG;TETRIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\libsgf\src;..\..\..\libsgf\3rdParty;..\..\..\games\Tetris;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\libsgf\src;..\..\..\libsgf\3rdParty;..\..\..\libsgf\3rdParty\nginx;..\..\..\games\Tetris;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,7 +121,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;TETRIS_EXPORTS;NDEBUG;TETRIS_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\libsgf\src;..\..\..\libsgf\3rdParty;..\..\..\games\Tetris;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\libsgf\src;..\..\..\libsgf\3rdParty;..\..\..\libsgf\3rdParty\nginx;..\..\..\games\Tetris;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\..\games\Tetris\block.cpp" />
     <ClCompile Include="..\..\..\games\Tetris\dllmain.cpp" />
     <ClCompile Include="..\..\..\games\Tetris\game.cpp" />
+    <ClCompile Include="..\..\..\games\Tetris\tetris.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\games\Tetris\block.h" />

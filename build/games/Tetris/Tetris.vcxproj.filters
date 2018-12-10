@@ -24,6 +24,9 @@
     <ClCompile Include="..\..\..\games\Tetris\block.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\games\Tetris\tetris.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\games\Tetris\block.h">
